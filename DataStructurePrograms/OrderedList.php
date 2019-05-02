@@ -1,5 +1,7 @@
 <?php
+//required file
 include "Node.php";
+
 interface LinkedList{
     public function isEmpty();
     public function add($newData);
@@ -18,28 +20,33 @@ class OrderedList implements LinkedList{
             return true;
         return false;
     }
+    //adding node to linkedlist
     public function add($newData){
         $newNode = new Node($newData,null);
         $newNode->nextPointer = $this->head;
         $this->head = $newNode;
     }
 
+    //removing node from linkedlist
     public function remove($key)
     {
         $tempNode =$this->head;
         $previousNode = null;
 
+        //if head itself contains element which is to be deleted
         if($tempNode!=null && $tempNode->data==$key){
             $this->head = $tempNode->nextPointer;
             $tempNode = null;
             echo "Node Deleted Successfully!\n";
             return;
         }else{
+            //element is not first element which is to be deleted
             while($tempNode!=null && $tempNode->data!=$key){
                 $previousNode = $tempNode;
                 $tempNode = $tempNode->nextPointer;
             }
     
+            //If node not found
             if($tempNode==null){
                 echo "Element Not Found\n";
                 return;
@@ -52,6 +59,7 @@ class OrderedList implements LinkedList{
         }
     }
 
+    //searching element
     public function search($key)
     {
         $currentNode = $this->head;

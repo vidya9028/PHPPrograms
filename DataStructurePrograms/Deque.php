@@ -11,6 +11,7 @@ class Deque{
         $this->array = new SplFixedArray(10);
     }
 
+    //checking queue is empty or not
     public function isEmpty()
     {
         if($this->front==-1 && $this->rear==-1){
@@ -21,6 +22,7 @@ class Deque{
         }
     }
 
+    //checking queue is full or not
     public function isFull()
     {
         if($this->rear==(count($this->array))){
@@ -64,8 +66,10 @@ class Deque{
         }
     }
 
+    //deleting element from front end
     public function deleteFront()
     {
+        //if queue has only one element
         if($this->front==$this->rear){
             $newData = $this->array[$this->front];
             $this->front = $this->rear = -1;
@@ -79,8 +83,10 @@ class Deque{
         return $newData;
     }
 
+    //deleting element from rear end
     public function deleteRear()
     {
+        //if queue has only one element
         if($this->rear == $this->front){
             $newData = $this->array[$this->rear];
             $this->rear = $this->front = -1;

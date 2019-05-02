@@ -8,7 +8,7 @@ class Stack{
         $this->top = -1;
         $this->stackArray = new SplFixedArray(Stack::$max-1);
     }
-
+    //checking stack is empty or not
     public function isEmpty()
     {
         if($this->top=-1){
@@ -19,6 +19,11 @@ class Stack{
         }
     }
 
+    /**
+     * pushing data into stack
+     * first check stack is full or not
+     * push data into stack
+     */
     public function push($newData){
     
         if($this->top>(Stack::$max-1)){
@@ -30,7 +35,13 @@ class Stack{
             $stackArray[$this->top] = $newData;
             return true;
         }
-}
+    }
+
+    /**
+     * pop data from stack
+     * first check stack is empty or not
+     * pop
+     */
     public function pop()
     {
         if($this->top<0){

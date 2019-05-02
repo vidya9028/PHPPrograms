@@ -19,17 +19,20 @@ class UnorderedList implements LinkedList{
             return true;
         return false;
     }
+    //adding new data to linkedlist
     public function add($newData){
         $newNode = new Node($newData,null);
         $newNode->nextPointer = $this->head;
         $this->head = $newNode;
     }
 
+    //removing data from linkedlist
     public function remove($key)
     {
         $tempNode =$this->head;
         $previousNode = null;
 
+        //if head itself contains data which is to be deleted
         if($tempNode!=null && $tempNode->data==$key){
             $this->head = $tempNode->nextPointer;
             $tempNode = null;
@@ -37,11 +40,13 @@ class UnorderedList implements LinkedList{
             return;
         }
 
+        //if deleting element is not the first element
         while($tempNode!=null && $tempNode->data!=$key){
             $previousNode = $tempNode;
             $tempNode = $tempNode->nextPointer;
         }
 
+        //if node is not present in the list
         if($tempNode==null){
             echo "Element Not Found\n";
             return;
@@ -53,6 +58,7 @@ class UnorderedList implements LinkedList{
         return;
     }
 
+    //searching an element
     public function search($key)
     {
         $currentNode = $this->head;
@@ -74,10 +80,16 @@ class UnorderedList implements LinkedList{
         }
     }
 
+    //adding data to the end of linked list
     public function append($newData)
     {
         $newNode = new Node($newData,null);
 
+        /**
+         * if linkedlist is empty
+         * make head as new node
+         * point nextpointer of new node to null
+         */
         if($this->isEmpty()){
            $this->head = new Node($newData,null);
            echo "Element Added at the end successfully!\n"; 
@@ -85,6 +97,11 @@ class UnorderedList implements LinkedList{
         }
         $newNode->nextPointer = null;
 
+        /**
+         * if linkedlist contains elemnets
+         * traverse linkedlist
+         * point lastnode pointer to new node
+         */
         $lastNode = $this->head;
         while($lastNode->nextPointer!=null){
             $lastNode = $lastNode->nextPointer;

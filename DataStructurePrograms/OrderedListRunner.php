@@ -1,14 +1,27 @@
 <?php
+/**
+ * Problem Statement:
+ * Read from file the list of Numbers and take user input for a new number
+ * Create a Ordered Linked List having Numbers in ascending order.
+ * The List of Numbers to a File.
+ */
 include "Util.php";
 include "OrderedList.php";
+
+//Opening file and readind file contents
 $myfile = fopen("TestingInt.txt","a+")or die ("could not open file");
 $numbers = fread($myfile,filesize("TestingInt.txt"));
+
+//storing file contents to array
 $array = explode(" ",$numbers);
 $list =new OrderedList();
+
 echo "File Elements to Array: ";
 foreach($array as $arr){
     echo $arr." ";
 }
+
+//adding file contents to linked list
 for($i=0;$i<count($array);$i++){
     
     $list->add($array[$i]);

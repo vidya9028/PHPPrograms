@@ -1,7 +1,7 @@
 <?php
 
 class BankingQueue{
-    public $array = array();
+    public $array;
     public $front = 0;
     public $rear = 0;
 
@@ -9,6 +9,7 @@ class BankingQueue{
     {
         $this->front = 0;
         $this->rear = 0;
+        $this->array = new SplFixedArray(10);
     }
     public function isEmpty(){
         if($this->front==$this->rear){

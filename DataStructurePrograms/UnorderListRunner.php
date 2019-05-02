@@ -1,4 +1,11 @@
 <?php
+/**
+ * Problem Statement:
+ * Read from file the list of Words and take user input to search a Text
+ * Take a user input to search a Word in the List. If the Word is not found then add it
+ * to the list, and if it found then remove the word from the List. In the end save the
+ * list into a file
+ */
 include "Util.php";
 include "UnorderedList.php";
 $myfile = fopen("Testing.txt","r")or die ("could not open file");
