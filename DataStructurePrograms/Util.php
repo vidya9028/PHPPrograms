@@ -1,5 +1,6 @@
 <?php
 include "Stack.php";
+include "Queue.php";
 class Util{
 
     /**
@@ -49,7 +50,7 @@ class Util{
     /**
      * Method for Checking is Arithmetic Expression is balanced or not
      */
-    public function isBalanced($strLength,$expression)
+    public static function isBalanced($strLength,$expression)
     {
         $character1=0;$character2=0;$result=0;
         $top = -1;
@@ -115,7 +116,7 @@ class Util{
      * Method for to check leap year
      * It returns boolean value
      */
-    public function leapYear($year)
+    public static function leapYear($year)
     {
         if($year%400==0 || $year%4==0){
             return true;
@@ -165,7 +166,7 @@ class Util{
     /**
      * Method for values in Calender
      */
-    public function arrayFill($firstDay, $array, $lastDay)
+    public static function arrayFill($firstDay, $array, $lastDay)
     {
         //taking count variable to fill the array
         $count = 1;
@@ -208,7 +209,7 @@ class Util{
     /**
     * Function to calculate the end of the month or no of days in the month
     */
-    public function calulateTotalDays($month, $year)
+    public static function calulateTotalDays($month, $year)
     {
         if ($month < 8) {
             if ($month % 2 == 0) {
@@ -228,6 +229,53 @@ class Util{
         }
         return 30;
         }
+    }
+
+    public static function calenderQueue($totalDays,$firstDay)
+    {
+         //taking two queue one for weekdays and one for date
+         $weekdaysQueue = new Queue();
+         $dateQueue = new Queue();
+         $array = array("Sun", "Mon", "Tue", "Wen", "Thu", "Fri", "sat");
+         
+         //storing days in weekdays queue
+         for($i=0;$i<count($array);$i++)
+         {
+             $weekdaysQueue->enqueue($array[$i]);
+         }
+         //storing dates in date queue
+         for( $i=1;$i<=$totalDays;$i++)
+         {
+             $dateQueue->enqueue($i);
+         }
+         //printing the days
+         for($i=0;$i<count($array);$i++)
+         {
+             echo $weekdaysQueue->dequeue()."  ";
+         }
+         echo "\n";
+         //printing space till the start date of calender 
+         for ($i=0;$i<($firstDay*5);$i++)
+         {
+             echo " ";
+         }
+         //printing the dates according to row
+         for($i=1;$i<=$totalDays;$i++)
+         {
+             if($i<10)
+             {
+                 echo(" ".$dateQueue->dequeue()."   ");
+             }
+             if($i>9)
+             {
+                 echo("".$dateQueue->dequeue()."   ");
+             }
+             if((($firstDay+$i)%7) ==0)
+             {
+                 echo " \n";
+             }
+         }
+ 
     }
 
 }
