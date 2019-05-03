@@ -52,9 +52,7 @@ class Util{
      * Method for Checking is Arithmetic Expression is balanced or not
      */
     public static function isBalanced($strLength,$expression)
-    {
-        $character1="";$character2="";$result=0;
-        
+    {   
         $stack = new Stack();
         for($i=0;$i<$strLength;$i++){
             
