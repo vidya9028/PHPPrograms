@@ -53,28 +53,20 @@ class Util{
      */
     public static function isBalanced($strLength,$expression)
     {
-        $character1=0;$character2=0;$result=0;
-        $top = -1;
-        $stackArray = null;
+        $character1="";$character2="";$result=0;
+        
         $stack = new Stack();
-        for($i=0;$i<$strLength-1;$i++){
+        for($i=0;$i<$strLength;$i++){
             
             if($expression[$i]=="("){
                 $stack->push($expression[$i]);   
             }else if($expression[$i]==")"){
-                $character2 = $expression[$i];
-                $character1 = $stackArray[$top]; 
-                $stack->pop();
-            }
-            
-            if($character1 == '(' && $character2 == ')'){
-                $result =1;
-            }
-            else{
-                $result = 0;
+                
+                $stack->pop(); 
+                
             }
        }
-       if($result==1 && $stack->isEmpty()){
+       if($stack->isEmpty()){
            return true;
        }
        else{
