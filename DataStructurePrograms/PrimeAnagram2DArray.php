@@ -37,11 +37,20 @@ for($j=0;$j<17;$j++){
 
 //displaying 2D array
 echo "\n Prime numbers Which are Anagrams :\n";
-for($j=0;$j<17;$j++){
-    for($j2=0;$j2<17;$j2++){
-        echo $array2[$j][$j2]." ";
+/*for($j=0;$j<count($array2)-1;$j++){
+    for($j2=0;$j2<count($array2)-1;$j2++){
+        if($array2[$j][$j2]!=null)
+                echo $array2[$j][$j2]." ";
     }
     echo "\n";
+}*/
+foreach($array2 as $var){
+    foreach($var as $var1){
+        echo $var1." ";
+    }
+    echo " ";
+    
 }
+echo "\n";
 
 ?>

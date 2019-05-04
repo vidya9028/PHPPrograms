@@ -52,19 +52,30 @@ class Util{
      * Method for Checking is Arithmetic Expression is balanced or not
      */
     public static function isBalanced($strLength,$expression)
-    {   
+    {
+        $character1="";$character2="";$result=0;
         $stack = new Stack();
-        for($i=0;$i<$strLength;$i++){
-            
-            if($expression[$i]=="("){
+        for($i=0;$i<$strLength;$i++)
+        {
+            if($expression[$i]=="(")
+            {
                 $stack->push($expression[$i]);   
-            }else if($expression[$i]==")"){
-                
-                $stack->pop(); 
-                
+            }
+            else if($expression[$i]==")")
+            {
+                $character2 = $expression[$i];
+                $character1 = $stack->pop();  
+            }
+
+            if($character1 == "(" && $character2 == ")"){
+                $result = 1;
+            }
+            else{
+                $result = 0;
             }
        }
-       if($stack->isEmpty()){
+       
+       if($result == 1 && $stack->isEmpty()){
            return true;
        }
        else{
