@@ -71,7 +71,7 @@ class Util{
 
         for($i=0;$i<count($array);$i++){
             foreach($decodedData[$array[$i]] as $value){
-                echo "The Price of ".$value["Name"]." for ".$value["Weight"]." is ".$value["Price"]." Rs\n";
+                echo "The Price of ".$value["Name"]." for ".$value["Weight"]." KG is ".($value["Weight"]*$value["Price"])." Rs\n";
             }
             echo "\n";
         }

@@ -2,18 +2,18 @@
     "Rice":[
         {
             "Name":"BasmatiRice",
-            "Weight":"1KG",
+            "Weight":30,
             "Price":50
         },
         {
             "Name":"LaxmiBhogRice",
-            "Weight":"1KG",
+            "Weight":20,
             "Price":60
          
         },
         {
             "Name":"HansrajRice",
-            "Weight":"1KG",
+            "Weight":50,
             "Price":55
         }
     ],
@@ -21,17 +21,17 @@
     "Pulse":[
         {
             "Name":"Green Gram",
-            "Weight":"1KG",
+            "Weight":10,
             "Price":90
         },
         {
             "Name":"Lentil",
-            "Weight":"1KG",
+            "Weight":20,
             "Price":80
         },
         {
             "Name":"Chickpeas",
-            "Weight":"1KG",
+            "Weight":40,
             "Price":60
         }
     ],
@@ -39,16 +39,16 @@
     "Wheat":[
         {
             "Name":"Aata",
-            "Weight":"1KG",
+            "Weight":60,
             "Price":50
         },
         {
             "Name":"Bread",
-            "Weight":"1KG",
+            "Weight":10,
             "Price":40
         },        {
             "Name":"Bun",
-            "Weight":"1KG",
+            "Weight":10,
             "Price":30
         }
     ]
