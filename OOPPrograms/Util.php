@@ -37,7 +37,7 @@ class Util{
      */
     public static function string_input()
     {
-        fscanf(STDIN,"%s\n",$string);
+        $string = readline(" ");
         while(!(strlen($string)>0) || (is_numeric($string) || ($string==null))){
             echo "Enter the Valid String:\n";
             $string=Util::string_input();
@@ -84,6 +84,20 @@ class Util{
     {
         $jsonString = json_encode($decodedData);
         return $jsonString;
+    }
+
+    /**
+     * Method for Entering Moblie Number
+     * Number Validation
+     */
+    public static function inputMobileNumber()
+    {
+        $number = readline(" ");
+        while(!(preg_match('/^[0-9]{2}-[0-9]{10}$/',$number))){
+            echo "Invalid Input! Please Enter Valid Number: ";
+            $number = Util::inputMobileNumber();
+        }
+        return $number;
     }
 }
 ?>
