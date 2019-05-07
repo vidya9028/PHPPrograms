@@ -65,7 +65,7 @@ class Util{
     /**
      * Method for displaying each value of inventoryDatamanagement
      */
-    public function inventoryData($decodedData)
+    public static function inventoryData($decodedData)
     {
         $array = ["Rice","Pulse","Wheat"];
 
@@ -98,6 +98,22 @@ class Util{
             $number = Util::inputMobileNumber();
         }
         return $number;
+    }
+
+    /**
+     * Method for string sorting using
+     * Insertion Sort
+     */
+    public static function insertionSort($array,$size)
+    {
+        for($i=1;$i<$size;$i++){
+            $temp = $array[$i];
+            for($j=$i-1;$j>=0 && (strcmp($array[$j],$temp))>0;$j--){
+                $array[$j+1] = $array[$j];
+            }
+            $array[$j+1] = $temp;
+        }
+        return $array;
     }
 }
 ?>
