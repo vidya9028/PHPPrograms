@@ -8,7 +8,7 @@
  * using 2D Array.
  */
 
-include "Util.php";
+
 class DeckOfCards{
     public $suits = null;
     public $rank = null;
@@ -20,6 +20,38 @@ class DeckOfCards{
         $this->suits = array("Clubs","Diamonds","Hearts","Spades");
         $this->rank = array("2","3","4","5","6","7","8","9","10","Ace","King","Queen","Jack");
         $this->deckofCards = [];
+    }
+
+    /**
+     * Method to intitialize cards and return cards
+     */
+    public function cardsInitialize()
+    {
+        $deck = [];
+        $k=0;
+
+        for($i=0;$i<count($this->suits);$i++){
+            for($j=0;$j<count($this->rank);$j++){
+                $deck[$k++] = $this->rank[$j].$this->suits[$i];
+            }
+        }
+        return $deck;
+    }
+
+    /**
+     * Method to shuffle the cards
+     */
+    public function shuffle($deck)
+    {
+        $totalCount = count($this->suits)*count($this->rank);
+        for($i=0;$i<$totalCount;$i++){
+            $randomNumber = mt_rand(0,$totalCount-1);
+
+            $temp = $deck[$i];
+            $deck[$i] = $deck[$randomNumber];
+            $deck[$randomNumber] = $temp;
+        }
+        return $deck;
     }
 
     //intializing data in 2D array
@@ -76,25 +108,4 @@ class DeckOfCards{
     }
 }
 
-try{
-    $cards = new DeckOfCards();
-
-    $card = $cards->initializeCards();
-
-    echo "Enter Number of times to shuffle: ";
-    $number = Util::user_integerInput();
-
-    while($number>0){
-        $card = $cards->shuffleCards();
-        $number--;
-    }
-
-    echo "Distributing cards to Four People:\n";
-    $card = $cards->distributeCards($card,4,9);
-
-    $cards->displayCards($card);
-}
-catch(Exception $e){
-    echo $e.getMessage();
-}
 ?>
