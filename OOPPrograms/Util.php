@@ -1,6 +1,6 @@
 <?php
 include "Person.php";
-
+require_once "StockData.php";
 class Util{
     
     /**
@@ -48,11 +48,11 @@ class Util{
     }
 
     /**
-     * Method for reading  json file as string
+     * Method for reading  json file as string 
      */
     public Static function readJsonFile($file)
     {
-        //taking json file contents as a String
+        //taking json file contents as a String and storing it in a variable
         $string = file_get_contents($file);
         
         /**
@@ -281,6 +281,155 @@ class Util{
         file_put_contents("AddressBooklist.json",json_encode($addressBook));
     }
 
+    /**
+     * Method for Buying stocks
+     */
+    public static function buyStocks($stockAccount)
+    {
+            $list = Util::printStockList();
     
+            echo "Enter No with Stock To Buy : ";
+            //var ch to store stock to buy
+            $choice = Util::validateAmount(Util::user_integerInput(), 1, 8);
+            echo $list[$choice-1]->stockName . " selected!\n";
+            echo "Enter No Of Shares To Buy of " . $list[$choice-1]->stockName . " : ";
+            //amount to store the no of shares to buy
+            $amount = Util::validateAmount(Util::user_integerInput(), 0, $list[$choice-1]->noofShares);
+            if($stockAccount[0]->AccountAmount<($list[$choice-1]->Price*$amount))
+            {
+                echo " Insufficient fund\n";
+                return;
+            }
+            $list[$choice-1]->noofShares -= $amount;
+            Util::saveList($list);
+            //getting the stock from the list
+            $stock = $list[$choice - 1];
+            //creating new stock
+            $stock = new StockData($stock->stockName, $stock->Price, $amount);
+            //adding the stock to the account if already in the list and return
+            $stockAccount[0]->AccountAmount-= $amount;
+            for ($i = 1; $i < count($stockAccount); $i++) 
+            {
+                if ($stockAccount[$i]->stockName == $stock->stockName) 
+                {
+                    $stockAccount[$i]->noofShares += $stock->noofShares;
+                    echo "Bought $stock->noofShares " . "$stock->stockName shares successfully";
+                    Util::saveAccount($stockAccount);
+                    return $stockAccount;
+                }
+            }
+            //or else adds the new stack the end pf the list
+            $stockAccount[] = $stock;
+            echo "Bought $stock->noofShares " . "$stock->stockName shares successfully";
+            //waiting for user to see the result
+            Util::saveAccount($stockAccount);
+            return $stockAccount;
+    }
+
+    /**
+     * Method for Saving stock list
+     */
+    public static function saveList(&$list)
+    {
+        file_put_contents("StockList.json", json_encode($list));
+    }
+
+    /**
+     * Method for validating amount entered by user
+     * used for buying shares
+     */
+    public static function validateAmount($amount, $min, $max)
+    {
+        while (filter_var($amount, FILTER_VALIDATE_INT, array("options" => array("min_range" => $min, "max_range" => $max))) === false) 
+        {
+            echo ("Variable value is not within the legal range\n");
+            echo "enter again : ";
+            $amount = Util::user_integerInput();
+        }
+        return $amount;
+    }
+
+    /**
+     * Method for saving assount
+     */
+    public static function saveAccount($stockAccount)
+    {
+        file_put_contents("StockAccount.json", json_encode($stockAccount));
+    }
+    /**
+     * Method for Printing Stock Report
+     */
+    public static function printStockList(int $s=0)
+    {
+        $list = json_decode(file_get_contents("StockList.json"));
+            if($s===0)
+            {
+                echo "No | Stock Name | Share Price | Available\n";
+                $i = 0;
+                foreach ($list as $key) 
+                {
+                    echo sprintf("%-1u. | %-10s | Rs %-12u | %-9u", ++$i, $key->stockName, $key->Price , $key->noofShares) . "\n";
+                }
+            }
+            return $list;
+    }
+
+    /**
+     *Method for selling stocks 
+     */
+    public static function sellStocks($stockAccount)
+        {
+            
+            Util::printAccount($stockAccount);
+    
+            echo "Enter No with Stock To Sell : ";
+            //validating the input
+            $ch = Util::validateAmount(Util::user_integerInput(), 1, count($stockAccount));
+            echo $stockAccount[$ch]->stockName . " selected!\nEnter No Of Shares To Sell of " . $stockAccount[$ch]->stockName . " : ";
+            $qt = Util::validateAmount(Util::user_integerInput(), 1, $stockAccount[$ch]->noofShares);
+            //removing the stock
+            $stockAccount[$ch]->noofShares -= $qt;
+            $list = Util::printStockList(1);
+            $list[$ch-1]->noofShares += $qt ;
+            $stockAccount[0]->AccountAmount += ($qt*$list[$ch-1]->Price);
+            Util::saveList($list);
+            Util::saveAccount($stockAccount);
+            echo "sold $qt shares successfully";
+            //check if the shares are empty to delete the entry completely
+            if ($stockAccount[$ch]->noofShares == 0) 
+            {
+                array_splice($stockAccount, ($ch), 1);
+            }
+            return $stockAccount;
+        }
+        //function to print the stock currently in the customer account
+        public static function printAccount($stockAccount)
+        {
+            echo "No | Stock Name | Share Price | No. Of Shares | Stock Price \n";
+            $i = 0;
+            //looping over and printing the account details
+            for ($i=1; $i < count($stockAccount) ; $i++) 
+            {
+                $key = $stockAccount[$i];
+                echo sprintf("%-2u | %-10s | rs %-8u | %-13u | rs %u", $i, $key->stockName, $key->Price, $key->noofShares, ($key->noofShares * $key->Price)) . "\n";
+            }
+        }
+        /**
+        * function to display the report of the stocks in account
+        */
+        public static function printStockreport($stockAccount)
+        {
+            $total = 0;
+            echo "Stock Name | Per Share Price | No. Of Shares | Stock Price\n";
+            //looping over and printing the account details and the account balance
+            for ($i=1; $i < count($stockAccount) ; $i++) 
+            {
+                $key = $stockAccount[$i];
+                echo sprintf("%-10s | rs %-12u | %-13u | rs %u", $key->stockName, $key->Price, $key->noofShares, ($key->noofShares * $key->Price)) . "\n";
+                $total += ($key->noofShares * $key->Price);
+            }
+            echo "\n";
+            echo "Total Value Of Stocks is : " . $total . " rs\namount left in account : ".$stockAccount[0]->AccountAmount."\n\n";
+        }    
 }
 ?>
