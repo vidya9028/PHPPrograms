@@ -14,7 +14,7 @@ echo "Number of object 1 instance variable: ".$obj->object1->instance;
 echo "\nNumber of object 2 instance variable: ".$obj->object2->instance;
 
 echo "\n\nCloned Object:\n";
-echo "Number of object 1 instance variable: ".$obj->object1->instance;
-echo "\nNumber of object 2 instance variable: ".$obj->object2->instance;
+echo "Number of object 1 instance variable: ".$obj2->object1->instance;
+echo "\nNumber of object 2 instance variable: ".$obj2->object2->instance;
 echo "\n";
 ?>
