@@ -5,7 +5,7 @@ require_once "SocketAdapterInterface.php";
 
 class SocketClassAdapter extends Socket implements SocketAdapterInterface{
     
-    public function get120Volt(){
+    public function get240Volt(){
         return (Socket::getVolt());
     }
 
