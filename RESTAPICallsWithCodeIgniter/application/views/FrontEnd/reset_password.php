@@ -13,6 +13,15 @@
   <div class="panel panel-default">
    <div class="panel-heading" style = "color:red">Reset Password</div>
    <div class="panel-body">
+   <?php
+        if($this->session->flashdata('message'))
+        {
+            echo '
+             <div class="alert alert-success">
+             '.$this->session->flashdata("message").'
+             </div>';
+        }
+    ?>
     <form method="post" action="<?php echo base_url(); ?>login/reset_password">
      <div class="form-group">
       <label>Enter New Password</label>
@@ -25,7 +34,7 @@
       <span class="text-danger"><?php echo form_error('confirm_password'); ?></span>
      </div>
      <div class="form-group">
-      <input type="submit" name="reset password" value="Submit" class="btn btn-info" />
+      <input type="submit" name="reset_password" value="Submit" class="btn btn-info" />
      </div>
     </form>
    </div>
