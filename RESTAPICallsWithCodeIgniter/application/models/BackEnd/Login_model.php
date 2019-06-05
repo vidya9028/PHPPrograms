@@ -18,18 +18,18 @@ class Login_model extends CI_Model
                     }
                 else
                 {
-                    return 'Wrong Password';
+                    return 'Please Enter Correct Username or Password.';
                 }
             }
             else
             {
-                return 'First verified your email address';
+                return 'First verified your Email Address.';
             }
             }
         }
         else
         {
-            return 'Wrong Email Address';
+            return 'Your Email Address is not Registered!';
         }
     }
 
