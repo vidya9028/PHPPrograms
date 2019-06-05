@@ -87,29 +87,30 @@ class Login extends CI_Controller {
             $this->load->view('FrontEnd/forgot_password');
     }
 
-    function reset_password(){
-        
-        $this->form_validation->set_rules('user_password', 'Password', 'required');
-        $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'required|matches[user_password]');
-        if($this->form_validation->run()){
-            $encrypted_password = base64_encode($this->input->post('user_password'));
-        }
-        if($this->uri->segment(3)){
+    function reset_password(){ 
+           
+        if($this->uri->segment(3))
+        {
             $verification_key = $this->uri->segment(3);
-            $result = $this->Login_model->reset_password($verification_key, $encrypted_password);
-            if($result > 0){
-                $data['message'] = '<h1 align="center">Your Password has been Changed successfully, now you can login from <a href="'.base_url().'login">here</a></h1>';
-                $this->load->view('FrontEnd/email_verification', $data);
-            }
-            else if($result == 0)
-            {
-                $data['message'] = '<h1 align="center">Invalid Link</h1>';
-                $this->load->view('FrontEnd/email_verification', $data);
-            }
-            
+
+            $this->form_validation->set_rules('user_password', 'Password', 'required');
+            $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'required|matches[user_password]');
+            if($this->form_validation->run()){      
+                $encrypted_password = base64_encode($this->input->post('user_password'));
+                //$encrypted_password = base64_encode($this->input->post('user_password'));
+                $result = $this->Login_model->reset_password($verification_key, $encrypted_password);
+                if($result > 0){
+                    $data['message'] = '<h1 align="center">Your Password has been Changed successfully, now you can login from <a href="'.base_url().'login">here</a></h1>';
+                    $this->load->view('FrontEnd/reset_password', $data);
+                }
+                else
+                {
+                    $data['message'] = '<h1 align="center">Invalid Link</h1>';
+                    $this->load->view('FrontEnd/reset_password', $data);
+                }
+            }   
         }
-    
-    $this->load->view('FrontEnd/reset_password');
-}
+        $this->load->view('FrontEnd/reset_password'); 
+    } 
 }
 ?>
