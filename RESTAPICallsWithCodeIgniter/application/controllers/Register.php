@@ -13,6 +13,7 @@ class Register extends CI_Controller {
         }
         $this->load->library('form_validation');
         $this->load->library('email');
+        $this->load->library('session');
         $this->load->model('BackEnd/Register_model');
     }
 
