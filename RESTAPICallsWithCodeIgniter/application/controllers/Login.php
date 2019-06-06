@@ -12,6 +12,7 @@ class Login extends CI_Controller {
         }
         $this->load->library('form_validation');
         $this->load->library('email');
+        $this->load->library('session');
         $this->load->model('BackEnd/Login_model');
         
     }
@@ -75,7 +76,7 @@ class Login extends CI_Controller {
    
                 if($this->email->send())
                 {
-                    $this->session->set_flashdata('message','Check in your email for Reset Password Link');
+                    $this->session->set_flashdata('message','A mail has been sent to you to reset the Password.');
                     redirect('login');
                 }
             }
@@ -87,30 +88,33 @@ class Login extends CI_Controller {
             $this->load->view('FrontEnd/forgot_password');
     }
 
-    function reset_password(){ 
-           
-        if($this->uri->segment(3))
-        {
-            $verification_key = $this->uri->segment(3);
-
-            $this->form_validation->set_rules('user_password', 'Password', 'required');
-            $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'required|matches[user_password]');
-            if($this->form_validation->run()){      
-                $encrypted_password = base64_encode($this->input->post('user_password'));
-                //$encrypted_password = base64_encode($this->input->post('user_password'));
-                $result = $this->Login_model->reset_password($verification_key, $encrypted_password);
-                if($result > 0){
-                    $data['message'] = '<h1 align="center">Your Password has been Changed successfully, now you can login from <a href="'.base_url().'login">here</a></h1>';
-                    $this->load->view('FrontEnd/reset_password', $data);
-                }
-                else
-                {
-                    $data['message'] = '<h1 align="center">Invalid Link</h1>';
-                    $this->load->view('FrontEnd/reset_password', $data);
-                }
-            }   
+    function reset_password(){
+        if($this->uri->segment(3)){
+            $this->session->set_userdata('verification_key',$this->uri->segment(3));
+            
+            $this->reset($this->session->userdata('verification_key'));
+        }else{
+            $verificationkey = $this->session->userdata('verification_key');
+            $this->reset($verificationkey);
+            
         }
-        $this->load->view('FrontEnd/reset_password'); 
-    } 
+    }
+    public function reset($verificationkey){
+        
+        $this->form_validation->set_rules('user_password','New Password','required');
+        $this->form_validation->set_rules('confirm_password','Confirm Password','required|matches[user_password]');
+        if($this->form_validation->run()){
+            $encryptedPassword = base64_encode($this->input->post('user_password'));
+            if(($this->Login_model->reset_password($verificationkey,$encryptedPassword)) > 0){
+                $this->session->set_flashdata('message','Your password has been changed Successfully!');
+                redirect('login');
+            }else{
+                $this->session->set_flashdata('message','Invalid link...!');
+                $this->load->view('FrontEnd/forgot_password');
+            }
+        }
+        $this->load->view('FrontEnd/reset_password');
+    }
+    
 }
 ?>
