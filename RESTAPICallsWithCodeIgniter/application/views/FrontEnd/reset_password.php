@@ -34,7 +34,7 @@
       <span class="text-danger"><?php echo form_error('confirm_password'); ?></span>
      </div>
      <div class="form-group">
-      <input type="submit" name="reset_password" value="Submit" class="btn btn-info" />
+      <input type="submit" name="submit" value="Submit" class="btn btn-info" />
      </div>
     </form>
    </div>
