@@ -33,16 +33,16 @@ class Login extends CI_Controller {
             {
                 redirect('private_area');
             }
+            else
+            {
+                $this->session->set_flashdata('message',$result);
+                redirect('login');
+            }
+        }
         else
         {
-            $this->session->set_flashdata('message',$result);
-            redirect('login');
+            $this->index();
         }
-    }
-    else
-    {
-        $this->index();
-    }
     }
 
     function forgot_password(){
@@ -104,13 +104,15 @@ class Login extends CI_Controller {
         $this->form_validation->set_rules('user_password','New Password','required');
         $this->form_validation->set_rules('confirm_password','Confirm Password','required|matches[user_password]');
         if($this->form_validation->run()){
-            $encryptedPassword = base64_encode($this->input->post('user_password'));
-            if(($this->Login_model->reset_password($verificationkey,$encryptedPassword)) > 0){
-                $this->session->set_flashdata('message','Your password has been changed Successfully!');
-                redirect('login');
-            }else{
-                $this->session->set_flashdata('message','Invalid link...!');
-                $this->load->view('FrontEnd/forgot_password');
+            if(isset($verification_key)){
+                $encryptedPassword = base64_encode($this->input->post('user_password'));
+                if(($this->Login_model->reset_password($verificationkey,$encryptedPassword)) > 0){
+                    $this->session->set_flashdata('message','Your password has been changed Successfully!');
+                    redirect('login');
+                }
+            }
+            else{
+                $this->session->set_flashdata('message','Invalid link!');
             }
         }
         $this->load->view('FrontEnd/reset_password');
