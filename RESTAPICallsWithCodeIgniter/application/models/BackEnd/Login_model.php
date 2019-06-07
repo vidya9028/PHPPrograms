@@ -16,20 +16,20 @@ class Login_model extends CI_Model
                     {
                         $this->session->set_userdata('id', $row->id);
                     }
+                    else
+                    {
+                     return 'Please Enter Correct Username or Password.';
+                    }
+                }
                 else
                 {
-                    return 'Please Enter Correct Username or Password.';
+                    return 'First verified your Email Address.';
                 }
-            }
-            else
-            {
-                return 'First verified your Email Address.';
-            }
             }
         }
         else
         {
-            return 'Your Email Address is not Registered!';
+            return 'Email Address is not Registered!';
         }
     }
 
