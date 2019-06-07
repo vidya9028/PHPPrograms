@@ -66,11 +66,11 @@ class Register extends CI_Controller {
                     redirect('login');
                 }
                 }
+            }
+        else
+        {
+            $this->index();
         }
-    else
-    {
-        $this->index();
-    }
     }
 
     function verify_email()
