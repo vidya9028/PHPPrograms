@@ -60,8 +60,8 @@ class Login extends CI_Controller {
                 $config['smtp_host']    = 'ssl://smtp.gmail.com';
                 $config['smtp_port']    = '465';
                 $config['smtp_timeout'] = '7';
-                $config['smtp_user']    = 'vidyasagar9028@gmail.com';
-                $config['smtp_pass']    = 'abhi9028';
+                $config['smtp_user']    = '*************@gmail.com';
+                $config['smtp_pass']    = '*************';
                 $config['charset']      = 'utf-8';
                 $config['newline']      = "\r\n";
                 $config['mailtype']     = 'text'; 
